@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+<li><a href="{% url 'home' %}" class="nav-link">Главная</a></li>
+<li><a href="{% url 'db_search' searchobject.pk %}" class="nav-link">Полный список</a></li>
+{% endblock %}
+
+{% block content %}
+
+<section class="site-section">
+	<div class="container">
+		<form action="{% url 'filter' %}" method="get">
+			<div class="container">
+				<h3>Выберите язык</h3>
+
+				<div class='row'>
+					{% for language in slanguage %}
+					{%if language.project_id == searchobject.id %}
+					<div class="form-check col-md-3 mb-1">
+						<input class="form-check-input" type="checkbox" name="language" value="{{language.id}}"
+							id="flexCheckDefault">
+						<label class="form-check-label" for="flexCheckDefault">
+							{{language.language}}
+						</label>
+					</div>
+					{% endif %}
+					{% endfor %}
+
+				</div>
+			</div>
+			<div class="container">
+				<h3>Выберите фрейм</h3>
+				{% for frame1 in fframe %}
+				{% if frame1.project_id == searchobject.id %}
+				<div class="card">
+					<h5 class="card-header">{{frame1}}</h5>
+					<div class='row'>
+						{% for frame2 in sframe %}
+						{% if frame2.parent_frame_id == frame1.id %}
+						<div class="card-body col-md-4">
+							<div class="card" style="width: 18rem;">
+								{% if frame2.video_is %}
+								<video controls>
+									<source src="{{frame2.frame_image.url}}" type="video/mp4">
+								</video>
+								{% else %}
+								<img src="{{frame2.frame_image.url}}" class="card-img-top" alt="...">
+								{% endif %}
+								<div class="card-body">
+									<p class="card-text">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="frame"
+											value="{{frame2.id}}" id="flexCheckDefault">
+										<label class="form-check-label" for="flexCheckDefault">
+											{{frame2}}
+										</label>
+									</div>
+									</p>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+				<div class="d-grid gap-2">
+					<button type="submit" class="btn btn-primary"> Найти </button>
+				</div>
+
+			</div>
+		</form>
+	</div>
+</section>
+
+{% endblock %}

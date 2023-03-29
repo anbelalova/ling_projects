@@ -1,0 +1,49 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+{% block navbar1 %}
+<h1 class="mb-0 site-logo"><a href="http://mlext.pythonanywhere.com/" class="nav-link">Проекты</a></hi>
+{% endblock %}
+{% block navbar %}
+<li><a href="#home-section" class="nav-link">Главная</a></li>
+<li><a href="#about-section" class="nav-link">Список проектов</a></li>
+{% endblock %}
+{% block content %}
+<section class="site-blocks-cover overflow-hidden">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 align-self-center">
+				<div class="row">
+					<div class="col-lg-9">
+						<h1>Московская лексико-типологическая группа</h1>
+					</div>
+					<div class="col-lg-2 ml-auto"><img src="{% static 'images/zhiraf.png' %}" alt="" class="img-fluid w-75"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="site-section" id="about-section">
+	<div class="container">
+		<div class="row mb-5 justify-content-center" data-aos="fade-up">
+			<div class="col-md-7 text-center">
+				<h2 class="text-black">Список проектов</h2>
+			</div>
+		</div>
+		<div class="row">
+			{% for project in projects_list %}
+			<div class="col-md-12 mb-4" data-aos="fade-up">
+				<div class="d-lg-flex blog-entry">
+					<div class="blog-entry-text">
+						<h3><a href="{{project.get_absolute_url}}">{{project.title}}</a></h3>
+						<span class="post-meta mb-3 d-block">{{project.group}}</span>
+						<p>{{project.short_description|truncatewords:25}}</p>
+						<p><a href="{{project.get_absolute_url}}" class="">Читать далее..</a></p>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+
+{% block navbar %}
+<li><a href="#home-section" class="nav-link">Главная</a></li>
+<li><a href="#about-section" class="nav-link">Участники</a></li>
+<li class="has-children">
+	<a href="#publication-section" class="nav-link">Материалы</a>
+	<ul class="dropdown">
+		<li><a href="#publication-section" class="nav-link">Публикации</a></li>
+		<li><a href="#publication-section" class="nav-link">Анкеты</a></li>
+	</ul>
+</li>
+<li><a href="#about-project" class="nav-link">Подробно о проекте</a></li>
+{% endblock %}
+
+{% block content %}
+
+<section class="site-blocks-cover overflow-hidden">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 align-self-center">
+				<div class="row">
+					<div class="col-lg-9">
+						<h1>{{publication.title}}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="site-section" id="about-project">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5 mb-5">
+				<h2 class="text-black">Участники</h2>
+				<br>
+				<div class="col-md-11 mb-5">
+					{% for member in publication.members.all %}
+					<p>{{member}}</p>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-7 ml-auto">
+				<h2 class="text-black">Информация</h2>
+				<br>
+				<div class="col-md-9 mb-5">
+					<p>{{publication.information}}, {{publication.year}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="site-section" id="about-project">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 mb-3">
+				<h2 class="text-black">О публикации</h2>
+			</div>
+			<div class="col-md-11 mb-3">
+				<p>{{publication.description|linebreaks}}</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+{% endblock %}

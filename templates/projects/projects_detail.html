@@ -1,0 +1,168 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+
+{% block navbar %}
+<li><a href="#home-section" class="nav-link">Главная</a></li>
+<li><a href="#about-section" class="nav-link">Участники</a></li>
+<li class="has-children">
+	<a href="#publication-section" class="nav-link">Материалы</a>
+	<ul class="dropdown">
+		{% if projects.publications %}
+		<li><a href="#publication-section" class="nav-link">Публикации</a></li>
+		{% endif %}
+		<li><a href="#publication-section" class="nav-link">Анкеты</a></li>
+	</ul>
+</li>
+<li><a href="#about-project" class="nav-link">Подробно о проекте</a></li>
+{% if projects.search_database %}
+	<li><a href="{% url 'questionnaire' projects.search_database.url %}" class="nav-link">Поиск по базе данных</a></li>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<section class="site-blocks-cover overflow-hidden">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 align-self-center">
+				<div class="row">
+					<div class="col-lg-11">
+						<h1>{{projects.title}}</h1>
+						<br>
+						<p>Группа: {{projects.group}}</p>
+						<p>Языки проекта:
+							{% for language in projects.language.all %}
+							{{language.language}}
+							{% endfor %}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="site-section" id="about-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 mb-3">
+				<h2 class="text-black">О проекте</h2>
+			</div>
+			<div class="col-md-7 mb-5">
+				<p>{{projects.short_description|linebreaks}}</p>
+				<p><a href="#about-project" class="">Читать далее..</a></p>
+			</div>
+			<div class="col-md-4 ml-auto">
+				<h2 class="text-black mb-4 h6">Участники</h2>
+				<ul class="list-unstyled">
+					{% for member in projects.members.all %}
+					<li class="mb-4">
+						<h3 class="text-black m-0">{{member.fio}}</h3>
+						<span class="text-muted">{{member.project_position}}</span>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+
+		<!-- <div class="row">
+			<div class="col-lg-3 text-left">
+				<img src="images/person_1.jpg" alt="Free Website Template by Free-Template.co"
+					class="rounded-circle img-fluid w-50 mb-4">
+				<h3 class="h4 text-black">Jean</h3>
+				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
+					the blind texts.</p>
+				<p>
+					<a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+					<a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+					<a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
+					<a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+				</p>
+			</div>
+		</div> -->
+	</div>
+</section>
+
+<section class="site-section bg-light" id="publication-section">
+	<div class="container">
+		<div class="row justify-content-center" data-aos="fade-up">
+			<div class="col-lg-6 text-center mb-5">
+				<h2 class="text-black mb-2">Публикации</h2>
+			</div>
+		</div>
+		<div class="row">
+			{% for publication in projects.publications.all %}
+			<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="">
+				<div class="d-lg-flex blog-entry">
+					<div class="col-md-3 ml-auto"><a href="single.html"></a><img
+							src="{% static 'images/free-icon-document-6611866.png' %}" alt=""
+							class="img-fluid w-50"></a></div>
+					<div class="blog-entry-text">
+						<h3><a href="{{publication.get_absolute_url}}">{{publication.title}}</a></h3>
+						<span class="post-meta mb-3 d-block">{{publication.year}}</span>
+						<p>{{publication.description |linebreaks|truncatewords:15}}</p>
+						<p><a href="{{publication.get_absolute_url}}" class="">Читать далее..</a></p>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		
+			<!-- <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="">
+				<div class="blog-entry-text">
+					<p>В данном проекте пока нет публикаций</p>
+				</div>
+			</div> -->
+
+		</div>
+	</div>
+</section>
+
+<section class="site-section bg-light" id="publication-section">
+	<div class="container">
+		<div class="row justify-content-center" data-aos="fade-up">
+			<div class="col-lg-6 text-center mb-5">
+				<h2 class="text-black mb-2">Квалификационные работы</h2>
+			</div>
+		</div>
+		<div class="row">
+			{% if qual_work in projects.qualification_works.all %}
+			{% for qual_work in projects.qualification_works.all %}
+			<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="">
+				<div class="d-lg-flex blog-entry">
+					<div class="col-md-3 ml-auto"><a href="single.html"></a><img
+							src="{% static 'images/free-icon-document-6611866.png' %}" alt=""
+							class="img-fluid w-50"></a></div>
+					<div class="blog-entry-text">
+						<h3><a href="{{publication.get_absolute_url}}">{{qual_work.title}}</a></h3>
+						<span class="post-meta mb-3 d-block">{{qual_work.year}}</span>
+						<p>{{qual_work.author |linebreaks|truncatewords:15}}</p>
+						<p><a href="{{publication.get_absolute_url}}" class="">Читать далее..</a></p>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			{% else %}
+			<div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="">
+				<div class="blog-entry-text">
+					<p>В данном проекте пока нет квалификационных работ</p>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</section>
+
+<section class="site-section" id="about-project">
+	<div class="container">
+		<div class="row">
+			<div class="col-12 mb-3">
+				<h2 class="text-black">О проекте</h2>
+			</div>
+			<div class="col-md-11 mb-5">
+				<p>{{projects.description|linebreaks}}</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

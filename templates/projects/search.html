@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+<li><a href="{% url 'home' %}" class="nav-link">Главная</a></li>
+<!--  -->
+{% endblock %}
+
+{% block content %}
+<section class="site-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-11">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Язык</th>
+							<th scope="col">Фрейм</th>
+							<th scope="col">Лексическое средство</th>
+							<th scope="col">Буквальный перевод</th>
+							<th scope="col">Конструкция</th>
+							<th scope="col">Комментарий</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in words %}
+						<tr>
+							<td>{{ item.language }}</td>
+							<td>{{ item.frame }}</td>
+							<td>{{ item.word }}</td>
+							<td>{{ item.translation }}</td>
+							<td>{{ item.construction }}</td>
+							<td>{{ item.comment }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</section>
+{% endblock %}
