@@ -14,4 +14,5 @@
 ![image](https://user-images.githubusercontent.com/86924413/228579351-35ce269c-35f7-456c-9150-7727c00838c0.png)
 
 # Структура проекта
-project/models - описание таблиц БД
+project/models/ - описание таблиц БД
+projects/views.py - представления
